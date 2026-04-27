@@ -8,29 +8,30 @@ dotenv.config();
 
 const app = express();
 
+/**
+ * ✅ FINAL CORS CONFIG
+ * - Allows localhost for local dev
+ * - Allows ALL Vercel deployments (*.vercel.app)
+ * - Uses SAME rules for normal requests + OPTIONS (preflight)
+ */
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (
+      !origin ||
+      origin === "http://localhost:5173" ||
+      origin.endsWith(".vercel.app")
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      ""
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
-
-app.options("*", cors());
-
-
-
-
-
-
-
-
-
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
