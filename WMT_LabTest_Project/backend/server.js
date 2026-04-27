@@ -8,7 +8,28 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://testswmt.netlify.app/"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+
+
+
+
+
+
+
+
+
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
