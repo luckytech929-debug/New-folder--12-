@@ -13,13 +13,15 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://testswmt.netlify.app/"
+      "https://testswmt.netlify.app"
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
+
+app.options("*", cors());
 
 
 
